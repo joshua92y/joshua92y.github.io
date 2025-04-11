@@ -1,1 +1,4 @@
-json.loed 성공
+{
+  "title": "Hello from GitHub!",
+  "body": "This is a sample post."
+}
