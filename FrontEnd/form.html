@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>회원가입</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -21,17 +22,12 @@
       background-color: #f9f9f9;
       width: 500px;
     }
-    .account-info, .personal-info, .career-info {
-      margin-bottom: 20px;
-      margin: 10px;
-    }
     label {
       display: block;
       margin-bottom: 5px;
       font-weight: bold;
     }
-    input[type="text"], input[type="password"], input[type="email"],
-    input[type="url"], select, textarea, input[type="number"], input[type="tel"], input[type="date"] {
+    input, select, textarea {
       width: 100%;
       padding: 8px;
       margin-bottom: 10px;
@@ -80,6 +76,90 @@
       margin-bottom: 10px;
     }
   </style>
+</head>
+<body>
+  <h1>회원가입 양식</h1>
+  <form action="target.html" method="post">
+    <div class="account-info">
+      <label for="id">ID:</label>
+      <div style="display: flex; gap: 10px;">
+        <input type="text" id="id" name="id" placeholder="아이디를 입력하세요" required />
+        <button type="button" onclick="checkIdDuplication()">중복 검사</button>
+      </div>
+      <div id="id-check-message" class="error-message"></div>
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required placeholder="비밀번호를 입력하세요" onblur="onPasswordBlur()" />
+      <div id="password-warning" class="error-message"></div>
+
+      <label for="confirm-password">Password 확인:</label>
+      <input type="password" id="confirm-password" required onblur="onConfirmPasswordBlur()" placeholder="비밀번호를 다시 입력해주세요" />
+      <div id="password-match" class="error-message"></div>
+    </div>
+
+    <div class="personal-info">
+      <label for="name">이름:</label>
+      <input type="text" id="name" name="name" required placeholder="이름을 입력하세요" />
+
+      <label for="email">이메일:</label>
+      <input type="email" id="email" name="email" required onblur="validateEmailFormat()" placeholder="이메일을 입력하세요" />
+      <div id="email-warning" class="error-message"></div>
+
+      <label for="phone">전화번호:</label>
+      <input type="tel" id="phone" name="phone" required onblur="validatePhoneNumber()" placeholder="010-1234-5678" />
+      <div id="phone-warning" class="error-message"></div>
+
+      <label for="birthdate">생년월일:</label>
+      <input type="date" id="birthdate" name="birthdate" required />
+
+      <label for="gender">성별:</label>
+      <select id="gender" name="gender" required>
+        <option value="">성별을 선택하세요</option>
+        <option value="male">남성</option>
+        <option value="female">여성</option>
+        <option value="other">기타</option>
+      </select>
+    </div>
+
+    <div class="career-info">
+      <label for="career">개발 경력 (년):</label>
+      <input type="number" id="career" name="career" min="1" max="50" required />
+
+      <label>사용 가능 언어:</label>
+      <div class="checkbox-group">
+        <div class="checkbox-item"><input type="checkbox" id="python" name="experience" value="python" /><label for="python">Python</label></div>
+        <div class="checkbox-item"><input type="checkbox" id="java" name="experience" value="java" /><label for="java">Java</label></div>
+        <div class="checkbox-item"><input type="checkbox" id="javascript" name="experience" value="javascript" /><label for="javascript">JavaScript</label></div>
+        <div class="checkbox-item"><input type="checkbox" id="csharp" name="experience" value="csharp" /><label for="csharp">C#</label></div>
+        <div class="checkbox-item"><input type="checkbox" id="cpp" name="experience" value="cpp" /><label for="cpp">C++</label></div>
+        <div class="checkbox-item"><input type="checkbox" id="html" name="experience" value="html" /><label for="html">HTML/CSS</label></div>
+        <div class="checkbox-item"><input type="checkbox" id="sql" name="experience" value="sql" /><label for="sql">SQL</label></div>
+      </div>
+
+      <label for="introduction">자기소개:</label>
+      <textarea id="introduction" name="introduction" rows="5" required></textarea>
+
+      <label for="blog">블로그 주소:</label>
+      <input type="url" id="blog" name="blog" />
+
+      <label for="company">회사:</label>
+      <select id="company" name="company" required>
+        <option value="">-- 선택 --</option>
+        <option value="삼성전자">삼성전자</option>
+        <option value="LG전자">LG전자</option>
+        <option value="SK하이닉스">SK하이닉스</option>
+        <option value="카카오">카카오</option>
+        <option value="네이버">네이버</option>
+        <option value="현대자동차">현대자동차</option>
+      </select>
+    </div>
+
+    <div class="button-group">
+      <button type="submit">제출</button>
+      <button type="button" onclick="document.querySelector('form').reset()">취소</button>
+    </div>
+  </form>
+
   <script>
     function validatePassword(password) {
       const hasTwoLower = (password.match(/[a-z]/g) || []).length >= 2;
@@ -95,7 +175,7 @@
       const warning = document.getElementById("password-warning");
 
       if (!validatePassword(password)) {
-        warning.textContent = "비밀번호는 8자 이상이며, 대문자/소문자/숫자/특수문자 각각 2자 이상 포함해야 합니다.";
+        warning.textContent = "비밀번호는 8자 이상, 대/소문자, 숫자, 특수문자 각각 2자 이상 포함해야 합니다.";
       } else {
         warning.textContent = "";
       }
@@ -121,18 +201,32 @@
     }
 
     function checkIdDuplication() {
-      const id = document.getElementById("id").value;
+      const id = document.getElementById("id").value.trim();
+      const msgBox = document.getElementById("id-check-message");
+
       if (!id) {
-        alert("ID를 입력하세요.");
+        msgBox.textContent = "ID를 입력하세요.";
         return;
       }
 
-      const existingIds = ["admin", "test", "user123"];
-      if (existingIds.includes(id.toLowerCase())) {
-        alert("이미 사용 중인 ID입니다.");
-      } else {
-        alert("사용 가능한 ID입니다.");
-      }
+      $.ajax({
+        url: 'https://joshua92y.github.io/members.json',
+        method: 'GET',
+        dataType: 'json',
+        success: function(data) {
+          const userIds = data.map(user => String(user.userid).toLowerCase());
+          if (userIds.includes(id.toLowerCase())) {
+            msgBox.textContent = "이미 사용 중인 ID입니다.";
+            msgBox.className = "error-message";
+          } else {
+            msgBox.textContent = "사용 가능한 ID입니다.";
+            msgBox.className = "success-message";
+          }
+        },
+        error: function() {
+          msgBox.textContent = "ID 확인 중 오류 발생.";
+        }
+      });
     }
 
     function validateEmailFormat() {
@@ -140,11 +234,7 @@
       const emailWarning = document.getElementById("email-warning");
 
       const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!regex.test(email)) {
-        emailWarning.textContent = "올바른 이메일 형식이 아닙니다.";
-      } else {
-        emailWarning.textContent = "";
-      }
+      emailWarning.textContent = regex.test(email) ? "" : "올바른 이메일 형식이 아닙니다.";
     }
 
     function validatePhoneNumber() {
@@ -152,100 +242,8 @@
       const phoneWarning = document.getElementById("phone-warning");
 
       const regex = /^01[0|1]-?\d{3,4}-?\d{4}$/;
-      if (!regex.test(phone)) {
-        phoneWarning.textContent = "올바른 전화번호 형식이 아닙니다. 예: 010-1234-5678";
-      } else {
-        phoneWarning.textContent = "";
-      }
+      phoneWarning.textContent = regex.test(phone) ? "" : "올바른 전화번호 형식이 아닙니다.";
     }
   </script>
-</head>
-<body>
-  <h1>회원가입 양식</h1>
-  <form action="target.html" method="post">
-    <div class="account-info" name="account-info">
-      <label for="id">ID:</label>
-      <div style="display: flex; gap: 10px;">
-        <input type="text" id="id" name="id" placeholder="아이디를 입력하세요" required />
-        <button type="button" onclick="checkIdDuplication()">중복 검사</button>
-      </div>
-
-      <label for="password">Password:</label>
-      <input type="password" id="password" name="password" placeholder="비밀번호를 입력하세요"
-             required onblur="onPasswordBlur()" />
-      <div id="password-warning" class="error-message"></div>
-
-      <label for="confirm-password">Password confirm</label>
-      <input type="password" id="confirm-password" name="confirm-password"
-             required onblur="onConfirmPasswordBlur()" placeholder="비밀번호를 다시 입력해주세요."/>
-      <div id="password-match" class="error-message"></div>
-    </div>
-
-    <div class="personal-info" name="personal-info">
-      <label for="name">이름:</label>
-      <input type="text" id="name" name="name" placeholder="이름을 입력하세요" required />
-
-      <label for="email">이메일:</label>
-      <input type="email" id="email" name="email" placeholder="이메일을 입력하세요" required onblur="validateEmailFormat()" />
-      <div id="email-warning" class="error-message"></div>
-
-      <label for="phone">전화번호:</label>
-      <input type="tel" id="phone" name="phone" placeholder="전화번호를 입력하세요" required onblur="validatePhoneNumber()" />
-      <div id="phone-warning" class="error-message"></div>
-
-      <label for="birthdate">생년월일:</label>
-      <input type="date" id="birthdate" name="birthdate" required />
-
-      <label for="gender">성별:</label>
-      <select id="gender" name="gender" required>
-        <option value="">성별을 선택하세요</option>
-        <option value="male">남성</option>
-        <option value="female">여성</option>
-        <option value="other">기타</option>
-      </select>
-    </div>
-
-    <div class="career-info">
-      <label for="career">개발 경력:</label>
-      <input type="number" id="career" name="career" min="1" max="50" placeholder="개발 경력을 입력하세요" required />
-
-      <label for="experience">경험한 프로그램 언어:</label>
-      <div class="checkbox-group">
-        <div class="checkbox-item"><input type="checkbox" id="python" name="experience" value="python" /><label for="python">Python</label></div>
-        <div class="checkbox-item"><input type="checkbox" id="java" name="experience" value="java" /><label for="java">Java</label></div>
-        <div class="checkbox-item"><input type="checkbox" id="javascript" name="experience" value="javascript" /><label for="javascript">JavaScript</label></div>
-        <div class="checkbox-item"><input type="checkbox" id="csharp" name="experience" value="csharp" /><label for="csharp">C#</label></div>
-        <div class="checkbox-item"><input type="checkbox" id="cpp" name="experience" value="cpp" /><label for="cpp">C++</label></div>
-        <div class="checkbox-item"><input type="checkbox" id="html" name="experience" value="html" /><label for="html">HTML/CSS</label></div>
-        <div class="checkbox-item"><input type="checkbox" id="sql" name="experience" value="sql" /><label for="sql">SQL</label></div>
-      </div>
-
-      <label for="introduction">자기소개:</label>
-      <textarea id="introduction" name="introduction" rows="5" placeholder="자기소개를 입력하세요" required></textarea>
-
-      <label for="blog">개인 블로그 주소:</label>
-      <input type="url" id="blog" name="blog" placeholder="개인 블로그 주소를 입력하세요"/>
-
-      <label for="company">현재 근무 회사:</label>
-      <select id="company" name="company" required>
-        <option value="">-- 선택 --</option>
-        <option value="삼성전자">삼성전자</option>
-        <option value="LG전자">LG전자</option>
-        <option value="SK하이닉스">SK하이닉스</option>
-        <option value="카카오">카카오</option>
-        <option value="네이버">네이버</option>
-        <option value="현대자동차">현대자동차</option>
-        <option value="기아자동차">기아자동차</option>
-        <option value="포스코">포스코</option>
-        <option value="한화">한화</option>
-        <option value="CJ제일제당">CJ제일제당</option>
-      </select>
-    </div>
-
-    <div class="button-group">
-      <button type="submit">제출</button>
-      <button type="button" class="cancel-btn" onclick="document.querySelector('form').reset();">취소</button>
-    </div>
-  </form>
 </body>
 </html>
