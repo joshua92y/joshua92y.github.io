@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery Template</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to jQuery</h1>
+    <button id="clickMe">Click Me</button>
+    <p id="message"></p>
+
+    <div id="div1">슬라이더로 구구단을 조절하세요</div>
+
+    <div id="div2" style="margin-top: 20px;">
+        <input type="range" id="rangeInput" min="1" max="100" value="50"
+               oninput="showValue(this.value)">
+        <output id="rangeOutput">50</output>
+    </div>
+
+    <div id="gugu" style="margin-top: 20px;"></div>
+    <script>
+        function showValue(val) {
+            $('#rangeOutput').val(val);
+        }
+    
+        $(document).ready(function() {
+            console.log('스크립트 시작됨');
+    
+            function drawGugu(num) {
+                let guguHtml = '';
+                for (let i = 1; i <= 9; i++) {
+                    guguHtml += `${num} x ${i} = ${num * i}<br>`;
+                }
+                $('#gugu').html(guguHtml);
+            }
+    
+            let initialNum = parseInt($('#rangeInput').val());
+            drawGugu(initialNum);
+    
+            $('#rangeInput').on('input', function() {
+                let num = parseInt($(this).val());
+                showValue(num);
+                drawGugu(num);
+            });
+    
+            $('#clickMe').on('click', function() {
+                $('#message').text('버튼이 클릭되었습니다!');
+            });
+    
+            // 🎨 색상 선택 처리
+            $('#colorPicker').on('input', function () {
+                const selectedColor = $(this).val();
+                $('#div1').css('background-color', selectedColor);
+            });
+            // 📅 날짜 선택 처리
+            $('#dateInput').on('change', function () {
+                const selectedDate = $(this).val();
+                $('#div1').text(`선택한 날짜: ${selectedDate}`);
+            });
+    
+            console.log('스크립트 끝');
+        });
+        $(document).ready(function() {
+            $('#language').change(function() {
+                var selectedLanguage = $(this).val();
+                //alert('선택된 언어: ' + selectedLanguage);
+                $('#result').text('선택된 언어: ' + selectedLanguage);
+            });
+            $('#languageForm').submit(function() {
+                var selectedLanguage = $('#language').val();
+                $('#hiddenLanguage').val(selectedLanguage);
+            });
+        });
+    </script>
+    <div id="div3" style="margin-top: 20px;">
+        <label for="colorPicker">색상 선택:</label>
+        <input type="color" id="colorPicker" value="#ff0000">
+    </div>
+    <div>
+        <label for="dateInput">날짜 선택:</label>
+        <input type="date" id="dateInput" name="dateInput" value="2023-10-01">
+    </div>
+    <form id="languageForm" action="target.html" method="get">
+        <input type="hidden" name="language" id="hiddenLanguage"><br>
+        <label for = 'language'>언어 선택</label><br>
+    <select id="language" name="language" required>
+        <option value="" disabled selected>언어를 선택하세요</option>
+        <option value="ko">한국어</option>
+        <option value="en">영어</option>
+        <option value="jp">일본어</option>
+        <option value="cn">중국어</option>
+    </select><br>
+    <div id="result" style="margin-top: 20px;"></div>
+    <button type="submit">저장</button>
+    </form>
+
+</body>
+</html>

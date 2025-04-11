@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Textarea Example</title>
+    <style>
+        body {
+            display: flex; /*inline-block, block, flex, grid*/
+            justify-content: center; /*main axis 정렬*/
+            align-items: center;     /*cross axis 정렬*/
+            height: 100vh; /* 화면 높이(Viewport Height의 100% */
+            margin: 0; /* 기본 여백 제거 */
+        }
+        form {
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+            background-color: #f9f9f9; 
+        }
+    </style>
+</head>
+<body>
+    <form id="form1" action="#" method="get">
+        <label for="message">Your Message:</label><br>
+        <textarea id="message" name="message" rows="5" cols="30" 
+            placeholder="여기에 간단한 개인소개"></textarea><br>
+        <button type="reset">취소</button>
+        <button type="submit">저장</button>
+    </form>
+</body>
+</html>

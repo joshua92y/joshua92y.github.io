@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <script>
+        function showValue(val) {
+            console.log(val);
+            //alert(val);
+        }
+    </script>
+    <meta charset="UTF-8">
+    <title>웹 개발 입문</title>
+    <style>
+        .name {
+            color: blue;
+            font-size: 20px;
+        }
+        .name:hover {
+            color: red;
+            font-size: 30px;
+        }
+        /*
+        td {
+            text-align: center;
+        }
+        th {
+            background-color: #ccc;
+        }
+
+        table,th,td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px 20px;
+        }*/
+        #tb2, th, td {
+            text-align: center;
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        #tb2 > caption {
+            font-size: 1.95em; font-weight: bold;
+            text-align: left;
+            padding:0.5em 0;
+        }
+
+        #form1 {
+            width:fit-content;
+            margin: 20px;
+            padding: 10px;
+            border: 1px solid rgb(200, 120, 190);
+            border-radius: 5px;
+        }
+        div {
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: inline-block;
+            width: 50px;
+            padding-right:1em;
+            text-align: right;
+        }
+        input[type="text"], input[type="email"] {
+            width: 150px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        #btns {
+            text-align:center;
+            margin-bottom: 0;
+        }
+        button:first-child {
+            margin-right:1em;
+        }
+        button:hover {
+            background-color: #92e4e2;
+        }
+    </style>
+  </head>
+  <body>
+    <h1>웹 개발 기초</h1>
+    <p>HTML</p>
+    <p>CSS</p>
+    <p>자바스크립트</p>
+    <p>
+        <!-- Anchor, Hyper Reference-->
+        <a href="https://www.w3schools.com/html/">HTML</a><br>
+        <a href="https://www.w3schools.com/css/">CSS</a><br>
+        <a href="https://www.w3schools.com/js/">JavaScript</a><br>
+    </p>
+    <p>
+        <ul>
+            <li>HTML</li>
+            <li>CSS</li>
+            <li>JavaScript</li>
+        </ul>
+        <ol>
+            <li>HTML</li>
+            <li>CSS</li>
+            <li>JavaScript</li>
+        </ol>
+    </p>
+    <p>
+        <span class="name">홍길동</span>
+        <span class="name">강호동</span>
+        <span class="name">임꺽정</span>
+    </p>
+
+    <p>
+        <a href="target.html">타겟 패이지로 이동</a><br>
+    </p>
+    <p>
+        <table id="tb2" border="0" width="400" height="150">
+            <caption>수급 국원 지원 양식</caption>
+            <colgroup>
+                <col width="25%">
+                <col width="25%">
+                <col width="50%">
+            </colgroup>
+            <tr>
+                <th rowspan="3">개인정보</th>
+                <th>이름</th>
+                <td> </td>
+            </tr>
+            <tr>
+                <th>학과/학번</th>
+                <td> </td>
+            </tr>
+            <tr>
+                <th>연락처</th>
+                <td> </td>
+            </tr>
+            <tr>
+                <th>지원분야</th>
+                <td colspan="2"> </td> 
+            </tr>
+        </table>
+    </p>
+    <p>
+        <form id="form1" action="http://naver.com" method="get">
+            <div>
+                    <label for="name">이름</label>
+                    <input type="text" id="name" name="name">
+                </div>
+                <div>
+                    <label for="email">이메일</label>
+                    <input type="email" id="email" name="email">
+                </div>
+                <div>
+                    남<input type="radio" name="gender" id="gender" value="m"> 
+                    여<input type="radio" name="gender" id="gender" value="f"> 
+                </div>
+            <!--<input type="submit" value="제출">-->
+            <div id="btns">
+                <button type="reset">취 소</button>
+                <button type="submit">전 송</button>
+                <input type="range" min="0" max="100" value="50" onchange="showValue(this.value)">
+            </div>
+        </form>
+    </p>
+
+  </body>
+</html>

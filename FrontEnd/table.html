@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>표 만들기</title>
+  <style>
+    table, td, th {
+      border:3px solid #ccc;
+    }
+    caption {
+      font-size: 30px;
+      text-align: left;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    table {
+      border-collapse: collapse;
+      width: 500px;
+      margin: 30px;
+    }
+    th, td {
+      padding: 10px;
+      text-align: center;
+    }
+    .title {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <table>
+    <caption>수출 국원 지원 양식</caption>
+    <tr>
+      <th rowspan="3" style="width: 100px;">개인정보</th>
+      <td style="width: 100px; font-weight: bold;">이름</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td style="font-weight: bold;">학과/학번</td>
+      <td></td>
+    </tr>
+    <tr>
+      <td style="font-weight: bold;">연락처</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>지원 분야</th>
+      <td colspan="2"></td>
+    </tr>
+  </table>
+</body>
+</html>

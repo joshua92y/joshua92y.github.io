@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic DOM with jQuery</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        #tag-container { margin-top: 20px; }
+        .tag { padding: 5px 10px; margin: 5px; background-color: #f0f0f0; display: inline-block; border-radius: 5px; }
+        .edit-btn, .delete-btn { margin-left: 5px; cursor: pointer; color: blue; }
+      </style>
+      <script>
+        $(document).ready(function() {
+          // 태그 추가
+          $('#add-tag').click(function() {
+            const tagText = $('#new-tag').val().trim();
+            if (tagText) {
+              const tag = $('<span class="tag"></span>').text(tagText);
+              const editBtn = $('<span class="edit-btn">[수정]</span>');
+              const deleteBtn = $('<span class="delete-btn">[삭제]</span>');
+        
+              tag.append(editBtn).append(deleteBtn); // 수정 및 삭제 버튼을 하위에 추가
+              $('#tag-container').append(tag);       // 현재 웹문서에 추가
+              $('#new-tag').val('');
+            }
+          });
+        
+          // 태그 수정
+          $('#tag-container').on('click', '.edit-btn', function() {
+            const tag = $(this).parent();  // $(this)는 버튼이므로 부모 태그를 선택
+            const currentText = tag.clone().children().remove().end().text(); // 텍스트만 추출
+            // text()함수는 현재 태그에 포함된 모든 자식 태그의 텍스트도 포함하여 반환하므로, clone()으로 복사한 후 children().remove()로 자식 태그를 제거하고 end()로 원래 태그로 돌아가서 text()를 호출함
+            const newText = prompt('수정할 태그 내용을 입력하세요:', currentText);
+            if (newText) {
+              tag.contents().first().replaceWith(newText); // 텍스트만 수정
+            }
+          });
+        
+          // 태그 삭제
+          $('#tag-container').on('click', '.delete-btn', function() {
+            if(confirm('정말로 삭제하시겠습니까?')){
+                $(this).parent().fadeOut(1000, function() {
+                    // 애니메이션 후 부모태그 삭제(포함된 자식 태그도 삭제됨)
+                    $(this).parent().remove();
+                });
+            }
+            });
+        });
+    </script>
+    </head>
+    <body>
+    
+      <input type="text" id="new-tag" placeholder="새 태그의 텍스트 데이터 입력">
+      <button id="add-tag">추가</button>
+    
+      <div id="tag-container"></div>
+
+    <hr>
+    <!--아래의 버튼을 누를 때마다 새로운 파일 콘트롤이 생성되도록 하기-->
+    <h2>파일 콘트롤 추가하기</h2>
+    <p>파일 콘트롤을 추가하려면 아래 버튼을 클릭하세요.</p>
+    <script>
+        function addFileControl() {
+            const fileInput = $('<div><input type="file" name="file"></div>'); // 새로운 파일 콘트롤 생성
+            $('#file-container').append(fileInput); // 현재 웹문서에 추가
+        }
+        function delFileControl() { // 마지막 파일 콘트롤 삭제
+            if ($('#file-container').children().length > 0) { // 파일 콘트롤이 존재하는 경우에만 삭제
+                $('#file-container').contents().last().remove(); // 마지막 파일 콘트롤 삭제
+            }
+            else alert('삭제할 파일 콘트롤이 없습니다.');
+        }
+    </script>
+    <button type="button" onclick="addFileControl()">파일 콘트롤 추가</button>
+    <button type="button" onclick="delFileControl()">파일 콘트롤 삭제</button>
+    <div id="file-container"></div>
+    </body>
+    </html>
