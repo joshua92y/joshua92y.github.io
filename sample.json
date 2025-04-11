@@ -15,7 +15,7 @@
         $(document).ready(function() {
             $('#loadData').click(function() {
                 $.ajax({
-                    url: 'https://jsonplaceholder.typicode.com/posts/1',
+                    url: 'https://raw.githubusercontent.com/joshua92y/joshua92y.github.io/main/sample.json,
                     method: 'GET',
                     dataType: 'json',
                     data: {
