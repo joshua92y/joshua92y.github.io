@@ -9,6 +9,7 @@
 <body>
     <h1>jQuery AJAX Example</h1>
     <button id="loadData">Load Data</button>
+    <button onclick="get_github()">Get Members</button>
     <div id="result"></div>
 
     <script>
@@ -34,23 +35,24 @@
             });
         });
     </script>
-        <script>
-        function get_github() {
-            $.ajax({
-                url: 'https://joshua92y.github.io/members.json',
-                method: 'GET',
-                dataType: 'json',
-                success: function(data) {
-                    let table = '<table>';
-                    table += '<tr><th>ID</th><th>Phone</th></tr>';
-                    table += `<tr><td>${data.userid}</td><td>${data.phone}</td></tr>`
-                    table += '</table>';
-                    $('#users').html(table);
-                },
-                error: function(xhr, status, error) {
-                    $('#users').html('<p>An error occurred while fetching data.</p>');
-                }
-            });
+    
+    <script>
+    function get_github() {
+        $.ajax({
+            url: 'https://joshua92y.github.io/members.json',
+            method: 'GET',
+            dataType: 'json',
+            success: function(data) {
+                let table = '<table>';
+                table += '<tr><th>ID</th><th>Phone</th></tr>';
+                table += `<tr><td>${data.userid}</td><td>${data.phone}</td></tr>`
+                table += '</table>';
+                $('#users').html(table);
+            },
+            error: function(xhr, status, error) {
+                $('#users').html('<p>An error occurred while fetching data.</p>');
+            }
+        });
         }
     </script>
     <div id="users"></div>
