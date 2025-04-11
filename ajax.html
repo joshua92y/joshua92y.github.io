@@ -36,16 +36,20 @@
         });
     </script>
     
-    <script>
+   <script>
     function get_github() {
         $.ajax({
             url: 'https://joshua92y.github.io/members.json',
             method: 'GET',
             dataType: 'json',
             success: function(data) {
-                let table = '<table>';
-                table += '<tr><th>ID</th><th>Phone</th></tr>';
-                table += `<tr><td>${data.userid}</td><td>${data.phone}</td></tr>`
+                let table = '<table border="1">';
+                table += '<tr><th>ID</th><th>Name</th><th>Phone</th></tr>';
+
+                data.forEach(function(member) {
+                    table += `<tr><td>${member.userid}</td><td>${member.name}</td><td>${member.phone}</td></tr>`;
+                });
+
                 table += '</table>';
                 $('#users').html(table);
             },
@@ -53,7 +57,7 @@
                 $('#users').html('<p>An error occurred while fetching data.</p>');
             }
         });
-        }
+    }
     </script>
     <div id="users"></div>
 </body>
