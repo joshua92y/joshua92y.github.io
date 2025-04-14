@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flex Layout Example</title>
+  <style>
+    /* 전체 페이지의 기본 스타일 설정 */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    /* 전체 페이지를 수직 방향으로 정렬하는 flex 컨테이너 */
+    .container {
+      display: flex;
+      flex-direction: column; /* 위에서 아래로 정렬 */
+      min-height: 100vh;       /* 화면 전체 높이만큼 사용 */
+    }
+
+    /* 상단 헤더 영역 스타일 */
+    header {
+      background-color: #333;
+      color: white;
+      padding: 1rem 0;
+      text-align: center;
+    }
+
+    /* 네비게이션 바 전체 배경 스타일 */
+    nav {
+      background-color: #444;
+    }
+
+    /* 네비게이션 메뉴 목록 스타일 */
+    .nav-menu {
+      list-style: none;        /* li 앞의 점 제거 */
+      display: flex;           /* 가로 정렬 */
+      justify-content: center;/* 가운데 정렬 */
+      gap: 2rem;               /* 메뉴 항목 간 간격 */
+      padding: 1rem 0;
+      margin: 0;
+      flex-wrap: wrap;
+    }
+
+    .nav-menu-right {
+      list-style: none;        /* li 앞의 점 제거 */
+      display: flex;           /* 가로 정렬 */
+      justify-content: flex-end;/* 왼쪽 정렬 */
+      gap: 2rem;
+      margin-right: 30px;
+    }
+    .nav-menu-right li a {
+      color: white;
+      text-decoration: none;   /* 밑줄 제거 */
+      font-weight: bold;
+      transition: 0.2s;        /* hover 시 부드럽게 전환 */
+    }
+
+    /* 각 네비게이션 링크 스타일 */
+    .nav-menu li a {
+      color: white;
+      text-decoration: none;   /* 밑줄 제거 */
+      font-weight: bold;
+      transition: 0.2s;        /* hover 시 부드럽게 전환 */
+    }
+
+    /* 링크에 마우스를 올렸을 때 효과 */
+    .nav-menu li a:hover {
+      text-decoration: underline;
+    }
+
+    /* 본문 콘텐츠를 가로로 나열하는 flex 컨테이너 */
+    .main-content {
+      display: flex;
+      flex: 1; /* 화면에서 가능한 모든 공간 차지 */
+    }
+
+    /* 왼쪽 사이드바 스타일 */
+    aside {
+      background-color: #f4f4f4;
+      padding: 1rem;
+      width: 200px;
+    }
+
+    /* 중앙 메인 콘텐츠 영역 스타일 */
+    main {
+      flex: 1;           /* 가변 크기 */
+      padding: 1rem;
+    }
+
+    /* 오른쪽 설명 영역 스타일 */
+    .description {
+      background-color: #f4f4f4;
+      padding: 1rem;
+      width: 200px;
+    }
+
+    /* 하단 푸터 스타일 */
+    footer {
+      background-color: #333;
+      color: white;
+      padding: 1rem;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <!-- 전체 페이지 구조를 감싸는 컨테이너 -->
+  <div class="container">
+    <header>   <!-- 상단 헤더 -->
+      <ul class="nav-menu-right">
+        <li><a href="#">login</a></li>
+        <li><a href="#">signup</a></li>
+     </ul>
+      <h1>Flex Layout 예제</h1>
+    </header>
+
+    <!-- 네비게이션 바 -->
+    <nav>
+      <ul class="nav-menu">
+        <li><a href="#">main</a></li>
+        <li><a href="#">what</a></li>
+        <li><a href="#">how</a></li>
+        <li><a href="#">who</a></li>
+        <li><a href="#">where</a></li>
+        <li><a href="#">when</a></li>
+        <li><a href="#">why</a></li>
+        <li><a href="#">about</a></li>
+        <li><a href="#">services</a></li>
+        <li><a href="#">contact</a></li>
+      </ul>
+    </nav>
+
+    <!-- 본문 콘텐츠 영역 -->
+    <div class="main-content">
+      
+      <!-- 왼쪽 사이드바 -->
+      <aside>
+        <h2>Sidebar</h2>
+        <ul>
+          <li><a href="#">main</a></li>
+          <li><a href="#">what</a></li>
+          <li><a href="#">how</a></li>
+          <li><a href="#">who</a></li>
+          <li><a href="#">where</a></li>
+          <li><a href="#">when</a></li>
+          <li><a href="#">why</a></li>
+        </ul>
+      </aside>
+
+      <!-- 메인 콘텐츠 -->
+      <main>
+        <h2>Main Content</h2>
+        <p>This is a responsive flex layout template. The layout adjusts based on screen size and demonstrates the power of CSS Flexbox for creating flexible, responsive designs.</p>
+        <p>The main content area grows to fill available space while the sidebar widths remain fixed.</p>
+      </main>
+
+      <!-- 오른쪽 설명 영역 -->
+      <div class="description">
+        <h2>description</h2>
+        <p>This is a responsive flex layout template. The layout adjusts based on screen size and demonstrates the power of CSS Flexbox for creating flexible, responsive designs.</p>
+      </div>
+    </div>
+
+    <!-- 하단 푸터 -->
+    <footer>
+      <p>&copy; 2024 Flex Layout Example. All rights reserved.</p>
+    </footer>
+  </div>
+</body>
+</html>
