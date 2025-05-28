@@ -4,13 +4,13 @@
 services:
   web:
     build: .
-    container_name: raw_sql_app
+    container_name: database_app
     ports:
       - "8000:8000"
     environment:
       - DATABASE_NAME=mydb
       - DATABASE_USER=postgres
-      - DATABASE_PASSWORD=postgres
+      - DATABASE_PASSWORD=2025
       - DATABASE_HOST=db    # This is the service name of the database
       - DATABASE_PORT=5432
     depends_on:
@@ -22,7 +22,7 @@ services:
     environment:
       POSTGRES_DB: mydb
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_PASSWORD: 2025
     volumes:
       - pgdata:/var/lib/postgresql/data   # pgdata:암묵적으로 생성되는 볼륨
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
