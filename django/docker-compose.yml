@@ -1,0 +1,31 @@
+#docker-compose.yml
+#version: '3.9'
+
+services:
+  web:
+    build: .
+    container_name: raw_sql_app
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_NAME=mydb
+      - DATABASE_USER=postgres
+      - DATABASE_PASSWORD=postgres
+      - DATABASE_HOST=db    # This is the service name of the database
+      - DATABASE_PORT=5432
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15
+    container_name: pg_db
+    environment:
+      POSTGRES_DB: mydb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data   # pgdata:암묵적으로 생성되는 볼륨
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:  # services외부에서 선언하고 내부에서 사용함
+  pgdata:
