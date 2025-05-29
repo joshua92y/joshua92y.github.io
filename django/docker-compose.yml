@@ -28,4 +28,4 @@ services:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 
 volumes:  # services외부에서 선언하고 내부에서 사용함
-  django_pgdata:
+  pgdata:
