@@ -14,7 +14,7 @@ services:
       - DATABASE_HOST=pg_db    # This is the service name of the database
       - DATABASE_PORT=5432
     depends_on:
-      - db
+      - pg_db
 
   db:
     image: postgres:15
