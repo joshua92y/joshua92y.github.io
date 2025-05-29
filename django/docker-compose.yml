@@ -24,7 +24,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 2025
     volumes:
-      - django_pgdata:/var/lib/postgresql/data   # pgdata:암묵적으로 생성되는 볼륨
+      - pgdata:/var/lib/postgresql/data   # pgdata:암묵적으로 생성되는 볼륨
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 
 volumes:  # services외부에서 선언하고 내부에서 사용함
